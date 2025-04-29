@@ -13,7 +13,6 @@ const Dashboard = () => {
         <Header />
         <Routes>
           <Route path="/tasks" element={<TaskList />} />
-          <Route path="/users" element={<UserList />} />
         </Routes>
       </div>
     </div>
