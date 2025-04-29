@@ -11,7 +11,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<TaskList />} />
+        <Route path="/" element={<Dashboard />} />
         <Route
           path="/register"
           element={<Register setIsAuthenticated={setIsAuthenticated} />}
