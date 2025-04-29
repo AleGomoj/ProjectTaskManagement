@@ -1,33 +1,27 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Register from './components/Auth/Register';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
 import Login from './components/Auth/Login';
-import TaskList from './components/Task/TaskList';
-import TaskForm from './components/Task/TaskForm';
+import Register from './components/Auth/Register';
+import { AuthProvider, AuthContext } from './context/AuthContext';
+import './App.css';
 
-const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route
-          path="/register"
-          element={<Register setIsAuthenticated={setIsAuthenticated} />}
-        />
-        <Route
-          path="/login"
-          element={<Login setIsAuthenticated={setIsAuthenticated} />}
-        />
-        <Route
-          path="/tasks/new"
-          element={<TaskForm setTask={setIsAuthenticated} />}
-        />
-        <Route path="/tasks/:id/edit" element={<TaskForm />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <AuthContext.Consumer>
+          {({ user }) => (
+            <Routes>
+              <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
+              <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+              <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
+            </Routes>
+          )}
+        </AuthContext.Consumer>
+      </Router>
+    </AuthProvider>
   );
-};
+}
 
 export default App;

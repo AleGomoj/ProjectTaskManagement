@@ -1,55 +1,32 @@
 import React, { useState } from 'react';
-import api from '../../services/api';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const Register = ({ setIsAuthenticated }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
+function Register() {
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/users/register', formData);
-      if (response.status === 201) {
-        setIsAuthenticated(true);
-      }
-    } catch (error) {
-      console.error('Error during registration:', error);
+      await axios.post('http://localhost:4000/api/users/register', form);
+      navigate('/login');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Error en el registro');
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        placeholder="Name"
-      />
-      <input
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        placeholder="Password"
-      />
-      <button type="submit">Register</button>
+      <h2>Registrarse</h2>
+      <input name="name" type="text" placeholder="Nombre" onChange={handleChange} required />
+      <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
+      <input name="password" type="password" placeholder="Contraseña" onChange={handleChange} required />
+      <button type="submit">Crear cuenta</button>
     </form>
   );
-};
+}
 
 export default Register;
