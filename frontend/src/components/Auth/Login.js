@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import api from '../../services/api';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+
 
 const Login = ({ setIsAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ const Login = ({ setIsAuthenticated }) => {
       const response = await api.post('/users/login', formData);
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
-        const decoded = jwt_decode(response.data.token);
+        const decoded = jwtDecode(response.data.token);
         setIsAuthenticated(true);
       }
     } catch (error) {
