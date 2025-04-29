@@ -1,19 +1,26 @@
 const express = require('express');
 const cors = require('cors');
+const app = express();
 require('dotenv').config();
 const { sequelize } = require('./models');
+
 const userRoutes = require('./routes/userRoutes');
 
-const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Rutas
 app.use('/api/users', userRoutes);
 
-// Base de datos y servidor
-sequelize.sync().then(() => {
-  app.listen(process.env.PORT, () => {
-    console.log(`Server running on http://localhost:${process.env.PORT}`);
-  });
+app.get('/', (_req, res) => res.send('Task Management API Running!'));
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('DB connected');
+    await sequelize.sync();
+    console.log(`Server running on port ${PORT}`);
+  } catch (err) {
+    console.error('Unable to connect to the database:', err);
+  }
 });
