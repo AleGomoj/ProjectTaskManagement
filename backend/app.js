@@ -5,11 +5,13 @@ require('dotenv').config();
 const { sequelize } = require('./models');
 
 const userRoutes = require('./routes/userRoutes');
+const boardRoutes = require('./routes/boardRoutes');
 
 app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
+app.use('/api/boards', boardRoutes);
 
 app.get('/', (_req, res) => res.send('Task Management API Running!'));
 

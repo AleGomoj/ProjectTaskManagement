@@ -1,21 +1,20 @@
 const express = require('express');
 const { createBoard, getBoards, getBoardById, updateBoard, deleteBoard } = require('../controllers/boardController');
+const { createTask, getTasks, updateTask, deleteTask } = require('../controllers/taskController');
 const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
-// Create a new board
+// Boards CRUD
 router.post('/', authMiddleware, createBoard);
-
-// Get all boards for the authenticated user
 router.get('/', authMiddleware, getBoards);
-
-// Get a specific board by ID
 router.get('/:id', authMiddleware, getBoardById);
-
-// Update a board by ID
 router.put('/:id', authMiddleware, updateBoard);
-
-// Delete a board by ID
 router.delete('/:id', authMiddleware, deleteBoard);
+
+// Tasks CRUD within a board
+router.post('/:boardId/tasks', authMiddleware, createTask);
+router.get('/:boardId/tasks', authMiddleware, getTasks);
+router.put('/:boardId/tasks/:taskId', authMiddleware, updateTask);
+router.delete('/:boardId/tasks/:taskId', authMiddleware, deleteTask);
 
 module.exports = router;
