@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import '../App.css';
 
-const GOOGLE_CLIENT_ID = '977150192945-nlprf1aebgcsr5vu7v95jg87qif009gb.apps.googleusercontent.com';
 const Landing = () => {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const res = await axios.post('http://localhost:4000/api/google/login', {
         credential: credentialResponse.credential,
       });
+      if (!res.data.token) throw new Error(res.data.message || 'No token recibido');
       login(res.data.token);
       navigate('/');
     } catch (err) {
-      alert(err.response?.data?.message || 'Error con Google');
+      alert(err.response?.data?.message || err.message || 'Error con Google');
+      console.error('Google login error:', err.response?.data || err);
     }
   };
 
@@ -29,17 +32,6 @@ const Landing = () => {
         Empezar
       </button>
       <div style={{ marginTop: 24 }}>
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={() => alert('Error con Google')}
-            width="260"
-            theme="filled_blue"
-            text="signin_with"
-            shape="pill"
-            logo_alignment="center"
-          />
-        </GoogleOAuthProvider>
       </div>
     </div>
   );

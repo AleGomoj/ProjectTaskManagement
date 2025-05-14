@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import '../../App.css';
 
-const GOOGLE_CLIENT_ID = 'TU_CLIENT_ID_AQUI'; // Sustituye por tu client ID real
+const GOOGLE_CLIENT_ID = '977150192945-nlprf1aebgcsr5vu7v95jg87qif009gb.apps.googleusercontent.com';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
