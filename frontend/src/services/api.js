@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:4000/api', // Corrijo el puerto al del backend
+  baseURL: 'http://localhost:4000/api',
 });
 
 // Boards CRUD

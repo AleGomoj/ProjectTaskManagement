@@ -1,15 +1,33 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import "../App.css";
+
+const navItems = [
+  { to: "/", icon: "🏠", label: "Inicio" },
+  { to: "/tasks", icon: "🗂️", label: "Tareas" },
+  { to: "/users", icon: "👥", label: "Usuarios" },
+  { to: "/profile", icon: "👤", label: "Perfil" },
+];
 
 const Sidebar = () => {
+  const location = useLocation();
   return (
-    <div className="sidebar">
-      <h2>Task Management</h2>
+    <nav className="sidebar">
+      <div className="sidebar-logo">TF</div>
       <ul>
-        <li><Link to="/tasks">Tasks</Link></li>
-        <li><Link to="/users">Users</Link></li>
+        {navItems.map((item) => (
+          <li key={item.to}>
+            <Link
+              to={item.to}
+              className={location.pathname === item.to ? "active" : ""}
+            >
+              <span>{item.icon}</span>
+              <span style={{ display: "inline-block", minWidth: 60 }}>{item.label}</span>
+            </Link>
+          </li>
+        ))}
       </ul>
-    </div>
+    </nav>
   );
 };
 

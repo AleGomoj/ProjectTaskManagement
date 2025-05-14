@@ -26,7 +26,6 @@ const BoardList = () => {
       setBoards([...boards, createdBoard]);
       setNewBoard({ name: '', description: '' });
     } catch (error) {
-      // Mostrar el mensaje real del backend si existe
       const msg = error.response?.data?.message || error.message || 'Error creando tablero';
       alert(msg);
     }
@@ -58,31 +57,41 @@ const BoardList = () => {
   };
 
   return (
-    <div>
+    <div className="board-list">
       <h2>Tableros</h2>
       <ul>
         {boards.map((board) => (
           <li key={board.id}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              {editId === board.id ? (
+                <>
+                  <input
+                    type="text"
+                    value={editData.name}
+                    onChange={e => setEditData({ ...editData, name: e.target.value })}
+                    placeholder="Nombre"
+                  />
+                  <input
+                    type="text"
+                    value={editData.description}
+                    onChange={e => setEditData({ ...editData, description: e.target.value })}
+                    placeholder="Descripción"
+                  />
+                </>
+              ) : (
+                <>
+                  <strong>{board.name}</strong>
+                  {board.description && <span style={{ marginLeft: 8 }}>{board.description}</span>}
+                </>
+              )}
+            </div>
             {editId === board.id ? (
               <>
-                <input
-                  type="text"
-                  value={editData.name}
-                  onChange={e => setEditData({ ...editData, name: e.target.value })}
-                  placeholder="Nombre"
-                />
-                <input
-                  type="text"
-                  value={editData.description}
-                  onChange={e => setEditData({ ...editData, description: e.target.value })}
-                  placeholder="Descripción"
-                />
                 <button onClick={() => handleUpdate(board.id)}>Guardar</button>
                 <button onClick={() => setEditId(null)}>Cancelar</button>
               </>
             ) : (
               <>
-                <strong>{board.name}</strong> <span>{board.description}</span>
                 <button onClick={() => handleEdit(board)}>Editar</button>
                 <button onClick={() => handleDelete(board.id)}>Eliminar</button>
               </>
