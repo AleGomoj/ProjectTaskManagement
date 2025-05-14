@@ -6,12 +6,14 @@ const { sequelize } = require('./models');
 
 const userRoutes = require('./routes/userRoutes');
 const boardRoutes = require('./routes/boardRoutes');
+const googleRoutes = require('./routes/googleRoutes');
 
 app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
 app.use('/api/boards', boardRoutes);
+app.use('/api/google', googleRoutes);
 
 app.get('/', (_req, res) => res.send('Task Management API Running!'));
 

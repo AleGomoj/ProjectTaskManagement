@@ -2,7 +2,10 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import '../../App.css';
+
+const GOOGLE_CLIENT_ID = 'TU_CLIENT_ID_AQUI'; // Sustituye por tu client ID real
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -32,6 +35,18 @@ const AuthForm = () => {
       setError(err.response?.data?.message || 'Error');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const res = await axios.post('http://localhost:4000/api/google/login', {
+        credential: credentialResponse.credential,
+      });
+      login(res.data.token);
+      navigate('/');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Error con Google');
     }
   };
 
@@ -77,6 +92,19 @@ const AuthForm = () => {
             {isLogin ? '¿No tienes cuenta? ' : '¿Ya tienes cuenta? '}
             <span style={{ fontSize: 22, verticalAlign: 'middle', marginLeft: 4, display: 'inline-block', transform: isLogin ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.2s' }}>➔</span>
           </span>
+        </div>
+        <div style={{ marginTop: 18 }}>
+          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => alert('Error con Google')}
+              width="260"
+              theme="filled_blue"
+              text="signin_with"
+              shape="pill"
+              logo_alignment="center"
+            />
+          </GoogleOAuthProvider>
         </div>
       </form>
     </div>
