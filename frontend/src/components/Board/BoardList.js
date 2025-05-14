@@ -4,6 +4,8 @@ import { fetchBoards, createBoard, updateBoard, deleteBoard } from '../../servic
 const BoardList = () => {
   const [boards, setBoards] = useState([]);
   const [newBoard, setNewBoard] = useState({ name: '', description: '' });
+  const [editId, setEditId] = useState(null);
+  const [editData, setEditData] = useState({ name: '', description: '' });
 
   useEffect(() => {
     const loadBoards = async () => {
@@ -11,68 +13,98 @@ const BoardList = () => {
         const data = await fetchBoards();
         setBoards(data);
       } catch (error) {
-        console.error('Error fetching boards:', error);
+        setBoards([]);
       }
     };
-
     loadBoards();
   }, []);
 
   const handleCreate = async () => {
+    if (!newBoard.name) return;
     try {
       const createdBoard = await createBoard(newBoard);
       setBoards([...boards, createdBoard]);
       setNewBoard({ name: '', description: '' });
     } catch (error) {
-      console.error('Error creating board:', error);
+      // Mostrar el mensaje real del backend si existe
+      const msg = error.response?.data?.message || error.message || 'Error creando tablero';
+      alert(msg);
     }
   };
 
-  const handleUpdate = async (id, updatedData) => {
+  const handleEdit = (board) => {
+    setEditId(board.id);
+    setEditData({ name: board.name, description: board.description });
+  };
+
+  const handleUpdate = async (id) => {
     try {
-      const updatedBoard = await updateBoard(id, updatedData);
-      setBoards(boards.map((board) => (board.id === id ? updatedBoard : board)));
+      const updatedBoard = await updateBoard(id, editData);
+      setBoards(boards.map((b) => (b.id === id ? updatedBoard : b)));
+      setEditId(null);
     } catch (error) {
-      console.error('Error updating board:', error);
+      alert('Error actualizando tablero');
     }
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm('¿Eliminar tablero?')) return;
     try {
       await deleteBoard(id);
-      setBoards(boards.filter((board) => board.id !== id));
+      setBoards(boards.filter((b) => b.id !== id));
     } catch (error) {
-      console.error('Error deleting board:', error);
+      alert('Error eliminando tablero');
     }
   };
 
   return (
     <div>
-      <h2>Boards</h2>
+      <h2>Tableros</h2>
       <ul>
         {boards.map((board) => (
           <li key={board.id}>
-            <h3>{board.name}</h3>
-            <p>{board.description}</p>
-            <button onClick={() => handleUpdate(board.id, { name: 'Updated Name', description: 'Updated Description' })}>Edit</button>
-            <button onClick={() => handleDelete(board.id)}>Delete</button>
+            {editId === board.id ? (
+              <>
+                <input
+                  type="text"
+                  value={editData.name}
+                  onChange={e => setEditData({ ...editData, name: e.target.value })}
+                  placeholder="Nombre"
+                />
+                <input
+                  type="text"
+                  value={editData.description}
+                  onChange={e => setEditData({ ...editData, description: e.target.value })}
+                  placeholder="Descripción"
+                />
+                <button onClick={() => handleUpdate(board.id)}>Guardar</button>
+                <button onClick={() => setEditId(null)}>Cancelar</button>
+              </>
+            ) : (
+              <>
+                <strong>{board.name}</strong> <span>{board.description}</span>
+                <button onClick={() => handleEdit(board)}>Editar</button>
+                <button onClick={() => handleDelete(board.id)}>Eliminar</button>
+              </>
+            )}
           </li>
         ))}
       </ul>
       <div>
-        <h3>Create New Board</h3>
+        <h3>Crear nuevo tablero</h3>
         <input
           type="text"
-          placeholder="Board Name"
+          placeholder="Nombre"
           value={newBoard.name}
-          onChange={(e) => setNewBoard({ ...newBoard, name: e.target.value })}
+          onChange={e => setNewBoard({ ...newBoard, name: e.target.value })}
         />
-        <textarea
-          placeholder="Board Description"
+        <input
+          type="text"
+          placeholder="Descripción"
           value={newBoard.description}
-          onChange={(e) => setNewBoard({ ...newBoard, description: e.target.value })}
+          onChange={e => setNewBoard({ ...newBoard, description: e.target.value })}
         />
-        <button onClick={handleCreate}>Create</button>
+        <button onClick={handleCreate}>Crear</button>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import BoardList from './Board/BoardList';
 import '../App.css';
 
 function Dashboard() {
@@ -10,7 +11,7 @@ function Dashboard() {
       <aside className="sidebar">
         <h2>Panel</h2>
         <ul>
-          <li><a href="#">Tareas</a></li>
+          <li><a href="#">Tableros</a></li>
           <li><a href="#">Usuarios</a></li>
           <li><a href="#">Perfil</a></li>
         </ul>
@@ -20,11 +21,8 @@ function Dashboard() {
           <h1>Bienvenido</h1>
           <button className="logout-btn" onClick={logout}>Cerrar sesión</button>
         </div>
-        <div className="task-list">
-          <ul>
-            <li>Tarea 1</li>
-            <li>Tarea 2</li>
-          </ul>
+        <div className="board-list">
+          <BoardList />
         </div>
       </div>
     </div>
