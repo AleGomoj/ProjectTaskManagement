@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 import BoardList from './Board/BoardList';
 import '../App.css';
 
@@ -13,7 +14,7 @@ function Dashboard() {
         <ul>
           <li><a href="#">Tasks</a></li>
           <li><a href="#">Users</a></li>
-          <li><a href="#">Profile</a></li>
+          <li><Link to="/profile">Profile</Link></li>
         </ul>
       </aside>
       <div className="main-content">

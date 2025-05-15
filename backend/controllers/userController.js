@@ -57,8 +57,18 @@ exports.getById = async (req, res) => {
 exports.update = async (req, res) => {
   const user = await User.findByPk(req.params.id);
   if (!user) return res.status(404).json({ message: 'User not found' });
-  await user.update(req.body);
-  res.json(user);
+
+  // Only allow password update
+  if (req.body.password) {
+    if (req.body.password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+    }
+    const hashed = await bcrypt.hash(req.body.password, 10);
+    await user.update({ password: hashed });
+    return res.json({ message: 'Password updated successfully' });
+  }
+
+  return res.status(400).json({ message: 'Nothing to update' });
 };
 
 exports.delete = async (req, res) => {

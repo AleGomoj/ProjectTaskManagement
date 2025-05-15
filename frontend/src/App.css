@@ -339,3 +339,60 @@ body {
     margin-bottom: 6px;
   }
 }
+
+/* Profile page styles */
+.profile-container {
+  background: #f4f6fa;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.profile-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #2d3a4b;
+  font-weight: 500;
+}
+.profile-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 4px;
+  background: #fff;
+  color: #2d3a4b;
+}
+.profile-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.profile-actions button {
+  background: #3f51b5;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.profile-actions button:disabled {
+  background: #b0bec5;
+  cursor: not-allowed;
+}
+.profile-warning {
+  background: #ffe082;
+  color: #795548;
+  padding: 0.7rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.profile-message {
+  margin-top: 1rem;
+  color: #388e3c;
+  font-weight: 500;
+}

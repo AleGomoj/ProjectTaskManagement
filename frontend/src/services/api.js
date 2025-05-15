@@ -28,4 +28,11 @@ export const deleteBoard = async (id) => {
   await api.delete(`/boards/${id}`, { headers: { Authorization: `Bearer ${token}` } });
 };
 
+// User profile update
+export const updateUserProfile = async (id, data) => {
+  const token = localStorage.getItem('token');
+  const res = await api.put(`/users/${id}`, data, { headers: { Authorization: `Bearer ${token}` } });
+  return res.data;
+};
+
 export default api;
