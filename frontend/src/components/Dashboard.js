@@ -3,20 +3,14 @@ import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import BoardList from './Board/BoardList';
 import '../App.css';
+import Sidebar from './Sidebar';
 
 function Dashboard() {
   const { logout } = useContext(AuthContext);
 
   return (
     <div className="dashboard-container">
-      <aside className="sidebar">
-        <h2>Panel</h2>
-        <ul>
-          <li><a href="#">Tasks</a></li>
-          <li><a href="#">Users</a></li>
-          <li><Link to="/profile">Profile</Link></li>
-        </ul>
-      </aside>
+      <Sidebar />
       <div className="main-content">
         <div className="header">
           <h1>Welcome</h1>

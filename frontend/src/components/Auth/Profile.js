@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { updateUserProfile } from '../../services/api';
 import '../../App.css';
+import Sidebar from '../Sidebar';
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -37,52 +38,57 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-container board-list">
-      <h2>User Profile</h2>
-      {isGoogleUser && (
-        <div className="profile-warning">
-          You are logged in with Google. Profile changes are not allowed.
-        </div>
-      )}
-      <form onSubmit={handleSubmit} className="profile-form">
-        <div>
-          <label>New Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            disabled={!editMode || isGoogleUser}
-            className="profile-input"
-            placeholder="Enter new password"
-          />
-        </div>
-        <div>
-          <label>Confirm Password:</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={form.confirmPassword}
-            onChange={handleChange}
-            disabled={!editMode || isGoogleUser}
-            className="profile-input"
-            placeholder="Confirm new password"
-          />
-        </div>
-        <div className="profile-actions">
-          {!editMode ? (
-            <button type="button" onClick={() => setEditMode(true)} disabled={isGoogleUser}>
-              Change Password
-            </button>
-          ) : (
-            <>
-              <button type="submit" disabled={isGoogleUser}>Save</button>
-              <button type="button" onClick={() => { setEditMode(false); setForm({ password: '', confirmPassword: '' }); }}>Cancel</button>
-            </>
+    <div className="dashboard-container">
+      <Sidebar />
+      <div className="main-content">
+        <div className="profile-container board-list">
+          <h2>User Profile</h2>
+          {isGoogleUser && (
+            <div className="profile-warning">
+              You are logged in with Google. Profile changes are not allowed.
+            </div>
           )}
+          <form onSubmit={handleSubmit} className="profile-form">
+            <div>
+              <label>New Password:</label>
+              <input
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                disabled={!editMode || isGoogleUser}
+                className="profile-input"
+                placeholder="Enter new password"
+              />
+            </div>
+            <div>
+              <label>Confirm Password:</label>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={form.confirmPassword}
+                onChange={handleChange}
+                disabled={!editMode || isGoogleUser}
+                className="profile-input"
+                placeholder="Confirm new password"
+              />
+            </div>
+            <div className="profile-actions">
+              {!editMode ? (
+                <button type="button" onClick={() => setEditMode(true)} disabled={isGoogleUser}>
+                  Change Password
+                </button>
+              ) : (
+                <>
+                  <button type="submit" disabled={isGoogleUser}>Save</button>
+                  <button type="button" onClick={() => { setEditMode(false); setForm({ password: '', confirmPassword: '' }); }}>Cancel</button>
+                </>
+              )}
+            </div>
+            {message && <div className="profile-message">{message}</div>}
+          </form>
         </div>
-        {message && <div className="profile-message">{message}</div>}
-      </form>
+      </div>
     </div>
   );
 };

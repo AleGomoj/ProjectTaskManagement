@@ -50,8 +50,8 @@ body {
 }
 
 .sidebar {
-  min-width: 80px;
-  width: 80px;
+  min-width: 60px;
+  width: 60px;
   background: linear-gradient(135deg, #a5dee5 0%, #b8b5ff 100%);
   color: #fff;
   display: flex;
@@ -102,6 +102,17 @@ body {
   background: #fff;
   color: #7c83fd;
   opacity: 1;
+}
+.sidebar ul li a span:last-child {
+  transition: opacity 0.2s, width 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 1;
+  width: auto;
+}
+.sidebar:not(:hover):not(:focus-within) ul li a span:last-child {
+  opacity: 0;
+  width: 0;
 }
 
 .main-content {
