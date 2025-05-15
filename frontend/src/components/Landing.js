@@ -26,10 +26,10 @@ const Landing = () => {
   return (
     <div className="landing">
       <h1>TaskFlow</h1>
-      <p>Organiza tus tareas y proyectos de forma sencilla y visual.<br />
-      Minimalista, rápido y seguro. ¡Empieza ahora gratis!</p>
+      <p>Organize your tasks and projects in a simple and visual way.<br></br>
+        Minimalist, fast, and secure. Start now for free!</p>
       <button className="landing-btn" onClick={() => navigate('/auth')}>
-        Empezar
+        Start
       </button>
       <div style={{ marginTop: 24 }}>
       </div>

@@ -53,12 +53,12 @@ const AuthForm = () => {
   return (
     <div className="auth-form-container">
       <form className="auth-form" onSubmit={handleSubmit}>
-        <h2>{isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}</h2>
+        <h2>{isLogin ? 'Log In' : 'Sign Up'}</h2>
         {!isLogin && (
           <input
             name="name"
             type="text"
-            placeholder="Nombre"
+            placeholder="Name"
             value={form.name}
             onChange={handleChange}
             required
@@ -77,7 +77,7 @@ const AuthForm = () => {
         <input
           name="password"
           type="password"
-          placeholder="Contraseña"
+          placeholder="Password"
           value={form.password}
           onChange={handleChange}
           required
@@ -85,11 +85,11 @@ const AuthForm = () => {
         />
         {error && <div className="auth-error">{error}</div>}
         <button type="submit" className="auth-btn" disabled={loading}>
-          {loading ? 'Cargando...' : isLogin ? 'Entrar' : 'Crear cuenta'}
+          {loading ? 'loading...' : isLogin ? 'Log In' : 'Sign Up'}
         </button>
         <div className="auth-toggle" onClick={() => { setIsLogin(!isLogin); setError(''); }}>
           <span style={{ color: '#7c83fd', cursor: 'pointer', fontWeight: 500 }}>
-            {isLogin ? '¿No tienes cuenta? ' : '¿Ya tienes cuenta? '}
+            {isLogin ? 'Sign Up ' : 'Log In '}
             <span style={{ fontSize: 22, verticalAlign: 'middle', marginLeft: 4, display: 'inline-block', transform: isLogin ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.2s' }}>➔</span>
           </span>
         </div>
@@ -97,7 +97,7 @@ const AuthForm = () => {
           <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
-              onError={() => alert('Error con Google')}
+              onError={() => alert('Error with Google')}
               width="260"
               theme="filled_blue"
               text="signin_with"
