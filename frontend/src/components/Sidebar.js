@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../App.css";
 
 const navItems = [
-  { to: "/", icon: "🏠", label: "Inicio" },
-  { to: "/tasks", icon: "🗂️", label: "Tareas" },
-  { to: "/users", icon: "👥", label: "Usuarios" },
-  { to: "/profile", icon: "👤", label: "Perfil" },
+  { to: "/", icon: "🏠", label: "Home" },
+  { to: "/tasks", icon: "🗂️", label: "Tasks" },
+  { to: "/users", icon: "👥", label: "Users" },
+  { to: "/profile", icon: "👤", label: "Profile" },
 ];
 
 const Sidebar = () => {
   const location = useLocation();
+  const [isWide, setIsWide] = useState(false);
+
+  // Detect hover using mouse events for instant change
+  const handleMouseEnter = () => setIsWide(true);
+  const handleMouseLeave = () => setIsWide(false);
+
   return (
-    <nav className="sidebar">
-      <div className="sidebar-logo">TF</div>
+    <nav
+      className="sidebar"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="sidebar-logo">{isWide ? "TaskFlow" : "TF"}</div>
       <ul>
         {navItems.map((item) => (
           <li key={item.to}>
