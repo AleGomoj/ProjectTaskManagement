@@ -19,7 +19,7 @@ const TaskForm = ({ task, boardId, setTask }) => {
       } else {
         await api.post(`/tasks`, { ...formData, boardId });
       }
-      setTask(null); // Reset the task form
+      setTask(null);
     } catch (error) {
       console.error('Error saving task:', error);
     }

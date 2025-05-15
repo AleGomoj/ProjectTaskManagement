@@ -11,15 +11,15 @@ function Dashboard() {
       <aside className="sidebar">
         <h2>Panel</h2>
         <ul>
-          <li><a href="#">Tableros</a></li>
-          <li><a href="#">Usuarios</a></li>
-          <li><a href="#">Perfil</a></li>
+          <li><a href="#">Tasks</a></li>
+          <li><a href="#">Users</a></li>
+          <li><a href="#">Profile</a></li>
         </ul>
       </aside>
       <div className="main-content">
         <div className="header">
-          <h1>Bienvenido</h1>
-          <button className="logout-btn" onClick={logout}>Cerrar sesión</button>
+          <h1>Welcome</h1>
+          <button className="logout-btn" onClick={logout}>Log Out</button>
         </div>
         <div className="board-list">
           <BoardList />

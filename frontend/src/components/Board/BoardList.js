@@ -26,7 +26,7 @@ const BoardList = () => {
       setBoards([...boards, createdBoard]);
       setNewBoard({ name: '', description: '' });
     } catch (error) {
-      const msg = error.response?.data?.message || error.message || 'Error creando tablero';
+      const msg = error.response?.data?.message || error.message || 'Error creating board';
       alert(msg);
     }
   };
@@ -42,23 +42,23 @@ const BoardList = () => {
       setBoards(boards.map((b) => (b.id === id ? updatedBoard : b)));
       setEditId(null);
     } catch (error) {
-      alert('Error actualizando tablero');
+      alert('Error updating board');
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('¿Eliminar tablero?')) return;
+    if (!window.confirm('¿Delete Board?')) return;
     try {
       await deleteBoard(id);
       setBoards(boards.filter((b) => b.id !== id));
     } catch (error) {
-      alert('Error eliminando tablero');
+      alert('Error deleting board');
     }
   };
 
   return (
     <div className="board-list">
-      <h2>Tableros</h2>
+      <h2>Boards</h2>
       <ul>
         {boards.map((board) => (
           <li key={board.id}>
@@ -87,33 +87,33 @@ const BoardList = () => {
             </div>
             {editId === board.id ? (
               <>
-                <button onClick={() => handleUpdate(board.id)}>Guardar</button>
-                <button onClick={() => setEditId(null)}>Cancelar</button>
+                <button onClick={() => handleUpdate(board.id)}>Save</button>
+                <button onClick={() => setEditId(null)}>Cancel</button>
               </>
             ) : (
               <>
-                <button onClick={() => handleEdit(board)}>Editar</button>
-                <button onClick={() => handleDelete(board.id)}>Eliminar</button>
+                <button onClick={() => handleEdit(board)}>Edit</button>
+                <button onClick={() => handleDelete(board.id)}>Delete</button>
               </>
             )}
           </li>
         ))}
       </ul>
       <div>
-        <h3>Crear nuevo tablero</h3>
+        <h3>Create new board</h3>
         <input
           type="text"
-          placeholder="Nombre"
+          placeholder="Name"
           value={newBoard.name}
           onChange={e => setNewBoard({ ...newBoard, name: e.target.value })}
         />
         <input
           type="text"
-          placeholder="Descripción"
+          placeholder="Description"
           value={newBoard.description}
           onChange={e => setNewBoard({ ...newBoard, description: e.target.value })}
         />
-        <button onClick={handleCreate}>Crear</button>
+        <button onClick={handleCreate}>Create</button>
       </div>
     </div>
   );
