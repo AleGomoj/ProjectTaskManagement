@@ -5,23 +5,36 @@ import AuthForm from './components/Auth/AuthForm';
 import Landing from './components/Landing';
 import Profile from './components/Auth/Profile';
 import { AuthProvider, AuthContext } from './context/AuthContext';
+import { DarkModeProvider } from './context/DarkModeContext';
+import { useDarkModeContext } from './context/DarkModeContext';
+import { useDarkMode } from './hooks/useDarkMode';
 import './App.css';
+
+function AppContent() {
+  const { darkMode } = useDarkModeContext();
+  useDarkMode(darkMode);
+  return (
+    <AuthContext.Consumer>
+      {({ user }) => (
+        <Routes>
+          <Route path="/" element={!user ? <Landing /> : <Dashboard />} />
+          <Route path="/auth" element={!user ? <AuthForm /> : <Navigate to="/" />} />
+          <Route path="/profile" element={user ? <Profile /> : <Navigate to="/auth" />} />
+        </Routes>
+      )}
+    </AuthContext.Consumer>
+  );
+}
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <AuthContext.Consumer>
-          {({ user }) => (
-            <Routes>
-              <Route path="/" element={!user ? <Landing /> : <Dashboard />} />
-              <Route path="/auth" element={!user ? <AuthForm /> : <Navigate to="/" />} />
-              <Route path="/profile" element={user ? <Profile /> : <Navigate to="/auth" />} />
-            </Routes>
-          )}
-        </AuthContext.Consumer>
-      </Router>
-    </AuthProvider>
+    <DarkModeProvider>
+      <AuthProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </AuthProvider>
+    </DarkModeProvider>
   );
 }
 

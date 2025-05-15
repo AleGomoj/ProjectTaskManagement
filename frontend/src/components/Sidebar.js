@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../App.css";
+import { useDarkModeContext } from "../context/DarkModeContext";
 
 const navItems = [
   { to: "/", icon: "🏠", label: "Home" },
@@ -11,19 +12,11 @@ const navItems = [
 
 const Sidebar = () => {
   const location = useLocation();
-  const [isWide, setIsWide] = useState(false);
-
-  // Detect hover using mouse events for instant change
-  const handleMouseEnter = () => setIsWide(true);
-  const handleMouseLeave = () => setIsWide(false);
+  const { darkMode, setDarkMode } = useDarkModeContext();
 
   return (
-    <nav
-      className="sidebar"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div className="sidebar-logo">{isWide ? "TaskFlow" : "TF"}</div>
+    <nav className="sidebar">
+      <div className="sidebar-logo">TF</div>
       <ul>
         {navItems.map((item) => (
           <li key={item.to}>
@@ -37,6 +30,14 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
+      <button
+        className="darkmode-toggle-btn"
+        onClick={() => setDarkMode((prev) => !prev)}
+        style={{ marginTop: 24, width: "90%" }}
+        aria-label="Toggle dark mode"
+      >
+        {darkMode ? "☀️" : "🌙"}
+      </button>
     </nav>
   );
 };
