@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import '../../App.css';
-import Sidebar from '../Sidebar';
 
 const GOOGLE_CLIENT_ID = '977150192945-nlprf1aebgcsr5vu7v95jg87qif009gb.apps.googleusercontent.com';
 
@@ -52,67 +51,62 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="dashboard-container">
-      <Sidebar />
-      <div className="main-content">
-        <div className="auth-form-container">
-          <form className="auth-form" onSubmit={handleSubmit}>
-            <h2>{isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}</h2>
-            {!isLogin && (
-              <input
-                name="name"
-                type="text"
-                placeholder="Nombre"
-                value={form.name}
-                onChange={handleChange}
-                required
-                className="auth-input"
-              />
-            )}
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className="auth-input"
-            />
-            <input
-              name="password"
-              type="password"
-              placeholder="Contraseña"
-              value={form.password}
-              onChange={handleChange}
-              required
-              className="auth-input"
-            />
-            {error && <div className="auth-error">{error}</div>}
-            <button type="submit" className="auth-btn" disabled={loading}>
-              {loading ? 'Cargando...' : isLogin ? 'Entrar' : 'Crear cuenta'}
-            </button>
-            <div className="auth-toggle" onClick={() => { setIsLogin(!isLogin); setError(''); }}>
-              <span style={{ color: '#7c83fd', cursor: 'pointer', fontWeight: 500 }}>
-                {isLogin ? '¿No tienes cuenta? ' : '¿Ya tienes cuenta? '}
-                <span style={{ fontSize: 22, verticalAlign: 'middle', marginLeft: 4, display: 'inline-block', transform: isLogin ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.2s' }}>➔</span>
-              </span>
-            </div>
-            <div style={{ marginTop: 18 }}>
-              <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={() => alert('Error con Google')}
-                  width="260"
-                  theme="filled_blue"
-                  text="signin_with"
-                  shape="pill"
-                  logo_alignment="center"
-                />
-              </GoogleOAuthProvider>
-            </div>
-          </form>
+    <div className="auth-form-container">
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <h2>{isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}</h2>
+        {!isLogin && (
+          <input
+            name="name"
+            type="text"
+            placeholder="Nombre"
+            value={form.name}
+            onChange={handleChange}
+            required
+            className="auth-input"
+          />
+        )}
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+          required
+          className="auth-input"
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Contraseña"
+          value={form.password}
+          onChange={handleChange}
+          required
+          className="auth-input"
+        />
+        {error && <div className="auth-error">{error}</div>}
+        <button type="submit" className="auth-btn" disabled={loading}>
+          {loading ? 'Cargando...' : isLogin ? 'Entrar' : 'Crear cuenta'}
+        </button>
+        <div className="auth-toggle" onClick={() => { setIsLogin(!isLogin); setError(''); }}>
+          <span style={{ color: '#7c83fd', cursor: 'pointer', fontWeight: 500 }}>
+            {isLogin ? '¿No tienes cuenta? ' : '¿Ya tienes cuenta? '}
+            <span style={{ fontSize: 22, verticalAlign: 'middle', marginLeft: 4, display: 'inline-block', transform: isLogin ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.2s' }}>➔</span>
+          </span>
         </div>
-      </div>
+        <div style={{ marginTop: 18 }}>
+          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => alert('Error con Google')}
+              width="260"
+              theme="filled_blue"
+              text="signin_with"
+              shape="pill"
+              logo_alignment="center"
+            />
+          </GoogleOAuthProvider>
+        </div>
+      </form>
     </div>
   );
 };
