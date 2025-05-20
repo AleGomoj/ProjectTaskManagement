@@ -4,7 +4,6 @@ const api = axios.create({
   baseURL: 'http://localhost:4000/api',
 });
 
-// Boards CRUD
 export const fetchBoards = async () => {
   const token = localStorage.getItem('token');
   const res = await api.get('/boards', { headers: { Authorization: `Bearer ${token}` } });
@@ -28,7 +27,6 @@ export const deleteBoard = async (id) => {
   await api.delete(`/boards/${id}`, { headers: { Authorization: `Bearer ${token}` } });
 };
 
-// Tasks CRUD within a board
 export const fetchTasksByBoard = async (boardId) => {
   const token = localStorage.getItem('token');
   const res = await api.get(`/boards/${boardId}/tasks`, { headers: { Authorization: `Bearer ${token}` } });
@@ -52,7 +50,6 @@ export const deleteTaskInBoard = async (boardId, taskId) => {
   await api.delete(`/boards/${boardId}/tasks/${taskId}`, { headers: { Authorization: `Bearer ${token}` } });
 };
 
-// User profile update
 export const updateUserProfile = async (id, data) => {
   const token = localStorage.getItem('token');
   const res = await api.put(`/users/${id}`, data, { headers: { Authorization: `Bearer ${token}` } });

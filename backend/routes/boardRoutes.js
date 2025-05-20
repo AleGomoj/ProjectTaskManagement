@@ -4,17 +4,22 @@ const { createTask, getTasks, updateTask, deleteTask } = require('../controllers
 const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
-// Boards CRUD
-router.post('/', authMiddleware, createBoard);
-router.get('/', authMiddleware, getBoards);
-router.get('/:id', authMiddleware, getBoardById);
-router.put('/:id', authMiddleware, updateBoard);
-router.delete('/:id', authMiddleware, deleteBoard);
+router.use(authMiddleware);
 
-// Tasks CRUD within a board
-router.post('/:boardId/tasks', authMiddleware, createTask);
-router.get('/:boardId/tasks', authMiddleware, getTasks);
-router.put('/:boardId/tasks/:taskId', authMiddleware, updateTask);
-router.delete('/:boardId/tasks/:taskId', authMiddleware, deleteTask);
+router.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.originalUrl} - Body:`, req.body, 'User:', req.user);
+  next();
+});
+
+router.post('/', createBoard);
+router.get('/', getBoards);
+router.get('/:id', getBoardById);
+router.put('/:id', updateBoard);
+router.delete('/:id', deleteBoard);
+
+router.post('/:boardId/tasks', createTask);
+router.get('/:boardId/tasks', getTasks);
+router.put('/:boardId/tasks/:taskId', updateTask);
+router.delete('/:boardId/tasks/:taskId', deleteTask);
 
 module.exports = router;

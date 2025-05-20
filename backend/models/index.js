@@ -10,7 +10,6 @@ const Comment = require('./comment')(sequelize, Sequelize);
 const Attachment = require('./attachment')(sequelize, Sequelize);
 const ActivityLog = require('./activityLog')(sequelize, Sequelize);
 
-// Relaciones
 User.hasMany(Board, { foreignKey: 'userId' });
 Board.belongsTo(User, { foreignKey: 'userId' });
 
@@ -20,7 +19,6 @@ Task.belongsTo(Board, { foreignKey: 'boardId' });
 Task.belongsToMany(Tag, { through: 'task_tags', foreignKey: 'taskId' });
 Tag.belongsToMany(Task, { through: 'task_tags', foreignKey: 'tagId' });
 
-// Relación board_users para miembros de boards
 Board.belongsToMany(User, { through: 'board_users', as: 'users', foreignKey: 'boardId', otherKey: 'userId' });
 User.belongsToMany(Board, { through: 'board_users', as: 'boards', foreignKey: 'userId', otherKey: 'boardId' });
 

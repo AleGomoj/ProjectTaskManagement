@@ -1,15 +1,13 @@
-const { Task } = require('../models');
+const { Task, Board, sequelize } = require('../models');
 
-// Create a new task within a board
 exports.createTask = async (req, res) => {
+  console.log(`[POST] /api/boards/${req.params.boardId}/tasks - Body:`, req.body, 'User:', req.user);
   try {
     const { boardId } = req.params;
     const { title, description, status, priority, due_date } = req.body;
-
     if (!title) {
       return res.status(400).json({ message: 'Task title is required' });
     }
-
     const task = await Task.create({ title, description, status, priority, due_date, boardId });
     res.status(201).json(task);
   } catch (err) {
@@ -18,15 +16,16 @@ exports.createTask = async (req, res) => {
   }
 };
 
-// Get all tasks within a board
 exports.getTasks = async (req, res) => {
+  console.log(`[GET] /api/boards/${req.params.boardId}/tasks - Body:`, req.body, 'User:', req.user);
   try {
     const { boardId } = req.params;
-    // Validar que el board existe y pertenece al usuario autenticado
-    const { Board, Task } = require('../models');
     const userId = req.user.id;
-    const board = await Board.findOne({ where: { id: boardId, userId } });
-    if (!board) {
+    const [results] = await sequelize.query(
+      'SELECT 1 FROM board_users WHERE boardId = ? AND userId = ? LIMIT 1',
+      { replacements: [boardId, userId] }
+    );
+    if (!results.length) {
       return res.status(404).json({ message: 'Board not found or access denied' });
     }
     const tasks = await Task.findAll({ where: { boardId } });
@@ -37,17 +36,25 @@ exports.getTasks = async (req, res) => {
   }
 };
 
-// Update a task by ID
 exports.updateTask = async (req, res) => {
+  console.log(`[PUT] /api/boards/${req.params.boardId}/tasks/${req.params.taskId} - Body:`, req.body, 'User:', req.user);
   try {
     const { boardId, taskId } = req.params;
+    const userId = req.user.id;
+    const [results] = await sequelize.query(
+      'SELECT 1 FROM board_users WHERE boardId = ? AND userId = ? LIMIT 1',
+      { replacements: [boardId, userId] }
+    );
+    if (!results.length) {
+      console.warn('[UPDATE TASK] Access denied for user', userId, 'on board', boardId);
+      return res.status(404).json({ message: 'Board not found or access denied' });
+    }
     const { title, description, status, priority, due_date } = req.body;
-
     const task = await Task.findOne({ where: { id: taskId, boardId } });
     if (!task) {
+      console.warn('[UPDATE TASK] Task not found:', taskId, 'in board', boardId);
       return res.status(404).json({ message: 'Task not found' });
     }
-
     await task.update({ title, description, status, priority, due_date });
     res.json(task);
   } catch (err) {
@@ -56,16 +63,24 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-// Delete a task by ID
 exports.deleteTask = async (req, res) => {
+  console.log(`[DELETE] /api/boards/${req.params.boardId}/tasks/${req.params.taskId} - User:`, req.user);
   try {
     const { boardId, taskId } = req.params;
-
+    const userId = req.user.id;
+    const [results] = await sequelize.query(
+      'SELECT 1 FROM board_users WHERE boardId = ? AND userId = ? LIMIT 1',
+      { replacements: [boardId, userId] }
+    );
+    if (!results.length) {
+      console.warn('[DELETE TASK] Access denied for user', userId, 'on board', boardId);
+      return res.status(404).json({ message: 'Board not found or access denied' });
+    }
     const task = await Task.findOne({ where: { id: taskId, boardId } });
     if (!task) {
+      console.warn('[DELETE TASK] Task not found:', taskId, 'in board', boardId);
       return res.status(404).json({ message: 'Task not found' });
     }
-
     await task.destroy();
     res.status(204).end();
   } catch (err) {
