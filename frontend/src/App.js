@@ -9,6 +9,7 @@ import { DarkModeProvider } from './context/DarkModeContext';
 import { useDarkModeContext } from './context/DarkModeContext';
 import { useDarkMode } from './hooks/useDarkMode';
 import './App.css';
+import { ToastProvider } from './context/ToastContext';
 
 function AppContent() {
   const { darkMode } = useDarkModeContext();
@@ -30,9 +31,11 @@ function App() {
   return (
     <DarkModeProvider>
       <AuthProvider>
-        <Router>
-          <AppContent />
-        </Router>
+        <ToastProvider>
+          <Router>
+            <AppContent />
+          </Router>
+        </ToastProvider>
       </AuthProvider>
     </DarkModeProvider>
   );

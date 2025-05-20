@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { fetchBoards, createBoard, updateBoard, deleteBoard } from '../../services/api';
+import { useToast } from '../../context/ToastContext';
 
 const BoardList = () => {
   const [boards, setBoards] = useState([]);
   const [newBoard, setNewBoard] = useState({ name: '', description: '' });
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({ name: '', description: '' });
+  const { showToast } = useToast();
 
   useEffect(() => {
     const loadBoards = async () => {
@@ -25,9 +27,10 @@ const BoardList = () => {
       const createdBoard = await createBoard(newBoard);
       setBoards([...boards, createdBoard]);
       setNewBoard({ name: '', description: '' });
+      showToast('Board created successfully', 'success');
     } catch (error) {
       const msg = error.response?.data?.message || error.message || 'Error creating board';
-      alert(msg);
+      showToast(msg, 'error');
     }
   };
 
@@ -41,8 +44,9 @@ const BoardList = () => {
       const updatedBoard = await updateBoard(id, editData);
       setBoards(boards.map((b) => (b.id === id ? updatedBoard : b)));
       setEditId(null);
+      showToast('Board updated', 'success');
     } catch (error) {
-      alert('Error updating board');
+      showToast('Error updating board', 'error');
     }
   };
 
@@ -51,8 +55,9 @@ const BoardList = () => {
     try {
       await deleteBoard(id);
       setBoards(boards.filter((b) => b.id !== id));
+      showToast('Board deleted', 'success');
     } catch (error) {
-      alert('Error deleting board');
+      showToast('Error deleting board', 'error');
     }
   };
 

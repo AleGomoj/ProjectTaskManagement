@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
+import { useToast } from '../../context/ToastContext';
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -28,5 +30,7 @@ const TaskList = () => {
     </div>
   );
 };
+
+// Para futuras acciones de eliminar/editar tareas, usar showToast('mensaje', 'tipo')
 
 export default TaskList;
