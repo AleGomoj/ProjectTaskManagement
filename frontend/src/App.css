@@ -129,7 +129,6 @@ body.dark-mode .auth-error {
   justify-content: center;
   background: linear-gradient(135deg, #f8f6ff 0%, #e0e7ff 100%);
   text-align: center;
-  padding: 32px 8px;
 }
 .landing h1 {
   font-size: 2.5rem;
