@@ -1,7 +1,8 @@
-const { Board } = require('../models');
+const { Board, sequelize } = require('../models');
 
 // Create a new board
 exports.createBoard = async (req, res) => {
+  const t = await sequelize.transaction();
   try {
     const { name, description } = req.body;
     const userId = req.user.id;
@@ -10,9 +11,15 @@ exports.createBoard = async (req, res) => {
       return res.status(400).json({ message: 'Board name is required' });
     }
 
-    const board = await Board.create({ name, description, userId });
+    // Crear el board
+    const board = await Board.create({ name, description, userId }, { transaction: t });
+    // Insertar en board_users
+    await sequelize.models.board_users.create({ boardId: board.id, userId }, { transaction: t });
+
+    await t.commit();
     res.status(201).json(board);
   } catch (err) {
+    await t.rollback();
     res.status(500).json({ message: err.message });
   }
 };
@@ -21,7 +28,15 @@ exports.createBoard = async (req, res) => {
 exports.getBoards = async (req, res) => {
   try {
     const userId = req.user.id;
-    const boards = await Board.findAll({ where: { userId } });
+    // Buscar boards donde el usuario esté en board_users
+    const boards = await Board.findAll({
+      include: [{
+        association: 'users',
+        where: { id: userId },
+        attributes: [],
+        through: { attributes: [] }
+      }]
+    });
     res.json(boards);
   } catch (err) {
     res.status(500).json({ message: err.message });

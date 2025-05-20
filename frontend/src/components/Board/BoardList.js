@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { fetchBoards, createBoard, updateBoard, deleteBoard } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
+import TaskList from '../Task/TaskList';
+import TaskForm from '../Task/TaskForm';
 
 const BoardList = () => {
   const [boards, setBoards] = useState([]);
   const [newBoard, setNewBoard] = useState({ name: '', description: '' });
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({ name: '', description: '' });
+  const [showTaskFormFor, setShowTaskFormFor] = useState(null);
+  const [taskRefreshKey, setTaskRefreshKey] = useState({});
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -66,8 +70,8 @@ const BoardList = () => {
       <h2>Boards</h2>
       <ul>
         {boards.map((board) => (
-          <li key={board.id}>
-            <div style={{ flex: 1, minWidth: 0 }}>
+          <li key={board.id} style={{ flexDirection: 'column', alignItems: 'flex-start', display: 'flex' }}>
+            <div style={{ flex: 1, minWidth: 0, width: '100%' }}>
               {editId === board.id ? (
                 <>
                   <input
@@ -90,17 +94,36 @@ const BoardList = () => {
                 </>
               )}
             </div>
-            {editId === board.id ? (
-              <>
-                <button onClick={() => handleUpdate(board.id)}>Save</button>
-                <button onClick={() => setEditId(null)}>Cancel</button>
-              </>
-            ) : (
-              <>
-                <button onClick={() => handleEdit(board)}>Edit</button>
-                <button onClick={() => handleDelete(board.id)}>Delete</button>
-              </>
+            <div style={{ marginTop: 8, display: 'flex', gap: 8 }}>
+              {editId === board.id ? (
+                <>
+                  <button onClick={() => handleUpdate(board.id)}>Save</button>
+                  <button onClick={() => setEditId(null)}>Cancel</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => handleEdit(board)}>Edit</button>
+                  <button onClick={() => handleDelete(board.id)}>Delete</button>
+                  <button onClick={() => setShowTaskFormFor(showTaskFormFor === board.id ? null : board.id)}>
+                    {showTaskFormFor === board.id ? 'Cancel Task' : 'Add Task'}
+                  </button>
+                </>
+              )}
+            </div>
+            {showTaskFormFor === board.id && (
+              <div style={{ width: '100%', marginTop: 8 }}>
+                <TaskForm
+                  boardId={board.id}
+                  setTask={() => {
+                    setShowTaskFormFor(null);
+                    setTaskRefreshKey((prev) => ({ ...prev, [board.id]: Date.now() }));
+                  }}
+                />
+              </div>
             )}
+            <div style={{ width: '100%', marginTop: 8 }}>
+              <TaskList boardId={board.id} refreshKey={taskRefreshKey[board.id] || 0} />
+            </div>
           </li>
         ))}
       </ul>

@@ -2,26 +2,29 @@ import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 
-const TaskList = () => {
+const TaskList = ({ boardId, refreshKey }) => {
   const [tasks, setTasks] = useState([]);
   const { showToast } = useToast();
 
   useEffect(() => {
+    if (!boardId) return;
     const fetchTasks = async () => {
       try {
-        const response = await api.get('/tasks');
+        const token = localStorage.getItem('token');
+        const response = await api.get(`/boards/${boardId}/tasks`, { headers: { Authorization: `Bearer ${token}` } });
         setTasks(response.data);
       } catch (error) {
-        console.error('Error fetching tasks:', error);
+        showToast('Error fetching tasks', 'error');
       }
     };
-
     fetchTasks();
-  }, []);
+  }, [boardId, showToast, refreshKey]);
+
+  if (!boardId) return null;
 
   return (
-    <div>
-      <h2>Task List</h2>
+    <div className="task-list">
+      <h3>Tasks</h3>
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>{task.title}</li>

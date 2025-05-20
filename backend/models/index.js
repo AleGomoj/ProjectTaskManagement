@@ -20,8 +20,9 @@ Task.belongsTo(Board, { foreignKey: 'boardId' });
 Task.belongsToMany(Tag, { through: 'task_tags', foreignKey: 'taskId' });
 Tag.belongsToMany(Task, { through: 'task_tags', foreignKey: 'tagId' });
 
-Board.belongsToMany(User, { through: 'board_users', foreignKey: 'boardId' });
-User.belongsToMany(Board, { through: 'board_users', foreignKey: 'userId' });
+// Relación board_users para miembros de boards
+Board.belongsToMany(User, { through: 'board_users', as: 'users', foreignKey: 'boardId', otherKey: 'userId' });
+User.belongsToMany(Board, { through: 'board_users', as: 'boards', foreignKey: 'userId', otherKey: 'boardId' });
 
 User.hasMany(Comment, { foreignKey: 'userId' });
 Task.hasMany(Comment, { foreignKey: 'taskId' });
