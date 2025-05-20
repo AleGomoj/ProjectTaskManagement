@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
 import BoardList from './Board/BoardList';
 import '../App.css';
 import Sidebar from './Sidebar';
