@@ -68,6 +68,9 @@ body.dark-mode .board-list, body.dark-mode .task-list {
   border: 1.5px solid #232946;
   box-shadow: 0 4px 32px #000a;
 }
+body.dark-mode .task-list {
+  border: none !important;
+}
 body.dark-mode .board-list li, body.dark-mode .task-list li {
   background: #23272f !important;
   border: 1px solid #444;
@@ -156,6 +159,12 @@ body.dark-mode .board-list strong {
 body.dark-mode .landing h1 {
   color: #b8b5ff !important;
   text-shadow: 0 2px 12px #232946;
+}
+
+body.dark-mode .task-list {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .landing {
@@ -338,12 +347,11 @@ body.dark-mode .landing h1 {
 }
 
 .board-list, .task-list {
-  background: #f9fafc;
-  border-radius: 18px;
-  box-shadow: 0 4px 32px 0 rgba(44, 62, 80, 0.08);
-  padding: 32px 24px;
-  margin-bottom: 32px;
-  border: 1.5px solid #e3e8f0;
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 .board-list h2, .task-list h2 {
