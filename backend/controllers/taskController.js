@@ -28,7 +28,7 @@ exports.getTasks = async (req, res) => {
     if (!results.length) {
       return res.status(404).json({ message: 'Board not found or access denied' });
     }
-    const tasks = await Task.findAll({ where: { boardId } });
+    const tasks = await Task.findAll({ where: { boardId }, order: [['order', 'ASC'], ['id', 'ASC']] });
     res.json(tasks);
   } catch (err) {
     console.error('Error in getTasks:', err);
@@ -85,6 +85,29 @@ exports.deleteTask = async (req, res) => {
     res.status(204).end();
   } catch (err) {
     console.error('Error in deleteTask:', err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+exports.updateTasksOrder = async (req, res) => {
+  console.log(`[PUT] /api/boards/${req.params.boardId}/tasks/order - Body:`, req.body, 'User:', req.user);
+  try {
+    const { boardId } = req.params;
+    const { orderedIds } = req.body; 
+    if (!Array.isArray(orderedIds)) {
+      return res.status(400).json({ message: 'orderedIds must be an array' });
+    }
+
+    const tasks = await Task.findAll({ where: { boardId } });
+    const idSet = new Set(tasks.map(t => t.id));
+    if (!orderedIds.every(id => idSet.has(id))) {
+      return res.status(400).json({ message: 'Invalid task ids' });
+    }
+
+    await Promise.all(orderedIds.map((id, idx) => Task.update({ order: idx }, { where: { id, boardId } })));
+    res.json({ success: true });
+  } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };

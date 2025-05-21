@@ -50,6 +50,11 @@ export const deleteTaskInBoard = async (boardId, taskId) => {
   await api.delete(`/boards/${boardId}/tasks/${taskId}`, { headers: { Authorization: `Bearer ${token}` } });
 };
 
+export const updateTasksOrder = async (boardId, orderedIds) => {
+  const token = localStorage.getItem('token');
+  return api.put(`/boards/${boardId}/tasks/order`, { orderedIds }, { headers: { Authorization: `Bearer ${token}` } });
+};
+
 export const updateUserProfile = async (id, data) => {
   const token = localStorage.getItem('token');
   const res = await api.put(`/users/${id}`, data, { headers: { Authorization: `Bearer ${token}` } });

@@ -1,6 +1,6 @@
 const express = require('express');
 const { createBoard, getBoards, getBoardById, updateBoard, deleteBoard } = require('../controllers/boardController');
-const { createTask, getTasks, updateTask, deleteTask } = require('../controllers/taskController');
+const { createTask, getTasks, updateTask, deleteTask, updateTasksOrder } = require('../controllers/taskController');
 const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
@@ -19,6 +19,7 @@ router.delete('/:id', deleteBoard);
 
 router.post('/:boardId/tasks', createTask);
 router.get('/:boardId/tasks', getTasks);
+router.put('/:boardId/tasks/order', updateTasksOrder);
 router.put('/:boardId/tasks/:taskId', updateTask);
 router.delete('/:boardId/tasks/:taskId', deleteTask);
 

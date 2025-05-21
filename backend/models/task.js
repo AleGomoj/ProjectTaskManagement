@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       status: { type: DataTypes.ENUM('pending', 'in_progress', 'completed', 'canceled'), defaultValue: 'pending' },
       priority: { type: DataTypes.ENUM('low', 'medium', 'high'), defaultValue: 'medium' },
       due_date: { type: DataTypes.DATEONLY },
-      boardId: { type: DataTypes.INTEGER, allowNull: false }
+      boardId: { type: DataTypes.INTEGER, allowNull: false },
+      order: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
     }, {
       tableName: 'tasks',
       timestamps: true
     });
   };
-  
