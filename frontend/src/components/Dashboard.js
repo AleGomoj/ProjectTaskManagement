@@ -5,14 +5,14 @@ import '../App.css';
 import Sidebar from './Sidebar';
 
 function Dashboard() {
-  const { logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <div className="dashboard-container">
       <Sidebar />
       <div className="main-content">
         <div className="header">
-          <h1>Welcome</h1>
+          <h1>Welcome{user && user.name ? `, ${user.name}` : ''}</h1>
           <button className="logout-btn" onClick={logout}>Log Out</button>
         </div>
         <div className="board-list">

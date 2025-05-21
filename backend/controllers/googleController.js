@@ -22,7 +22,7 @@ exports.googleLogin = async (req, res) => {
     if (!user) {
       user = await User.create({ name: name || email, email, password: sub }); // sub como password dummy
     }
-    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user.id, role: user.role, name: user.name }, process.env.JWT_SECRET, { expiresIn: '1d' });
     res.json({ token, user });
   } catch (err) {
     res.status(401).json({ message: 'Google auth failed', error: err.message });
