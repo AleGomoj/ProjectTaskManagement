@@ -291,12 +291,17 @@ body.dark-mode .auth-error {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 0;
+  padding: 12px;
   border-bottom: 1px solid #f0f0f0;
+  border: 1px solid #686868;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: none;
 }
-.board-list li:last-child {
-  border-bottom: none;
+body.dark-mode .board-list li {
+  border: 1px solid #b8b5ff;
 }
+
 .board-list strong {
   font-size: 1.08rem;
   color: #7c83fd;
