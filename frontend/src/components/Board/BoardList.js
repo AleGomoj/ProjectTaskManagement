@@ -3,6 +3,7 @@ import { fetchBoards, createBoard, updateBoard, deleteBoard } from '../../servic
 import { useToast } from '../../context/ToastContext';
 import TaskList from '../Task/TaskList';
 import TaskForm from '../Task/TaskForm';
+import Swal from 'sweetalert2';
 
 const BoardList = () => {
   const [boards, setBoards] = useState([]);
@@ -55,7 +56,19 @@ const BoardList = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('¿Delete Board?')) return;
+    const result = await Swal.fire({
+      title: 'Delete board?',
+      text: 'This action cannot be undone.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#f67280',
+      cancelButtonColor: '#a5dee5',
+      confirmButtonText: 'Yes, delete',
+      cancelButtonText: 'Cancel',
+      background: '#fff',
+      color: '#2d2d2d',
+    });
+    if (!result.isConfirmed) return;
     try {
       await deleteBoard(id);
       setBoards(boards.filter((b) => b.id !== id));
@@ -78,13 +91,13 @@ const BoardList = () => {
                     type="text"
                     value={editData.name}
                     onChange={e => setEditData({ ...editData, name: e.target.value })}
-                    placeholder="Nombre"
+                    placeholder="Name"
                   />
                   <input
                     type="text"
                     value={editData.description}
                     onChange={e => setEditData({ ...editData, description: e.target.value })}
-                    placeholder="Descripción"
+                    placeholder="Description"
                   />
                 </>
               ) : (

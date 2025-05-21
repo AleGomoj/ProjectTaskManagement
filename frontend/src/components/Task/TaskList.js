@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api, { createTaskInBoard, updateTaskInBoard, deleteTaskInBoard } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
+import Swal from 'sweetalert2';
 
 const TaskList = ({ boardId, refreshKey }) => {
   const [tasks, setTasks] = useState([]);
@@ -78,7 +79,19 @@ const TaskList = ({ boardId, refreshKey }) => {
                   fontWeight: 500
                 }}
                 onClick={async () => {
-                  if (window.confirm('Are you sure you want to delete this task?')) {
+                  const result = await Swal.fire({
+                    title: 'Delete task?',
+                    text: 'This action cannot be undone.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#f67280',
+                    cancelButtonColor: '#a5dee5',
+                    confirmButtonText: 'Yes, delete',
+                    cancelButtonText: 'Cancel',
+                    background: '#fff',
+                    color: '#2d2d2d',
+                  });
+                  if (result.isConfirmed) {
                     try {
                       await deleteTaskInBoard(boardId, task.id);
                       setLocalRefresh(Date.now());
