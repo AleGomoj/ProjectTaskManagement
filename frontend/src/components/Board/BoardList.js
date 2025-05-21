@@ -13,6 +13,7 @@ const BoardList = () => {
   const [showTaskFormFor, setShowTaskFormFor] = useState(null);
   const [taskRefreshKey, setTaskRefreshKey] = useState({});
   const { showToast } = useToast();
+  const [showCreate, setShowCreate] = useState(false);
 
   useEffect(() => {
     const loadBoards = async () => {
@@ -32,6 +33,7 @@ const BoardList = () => {
       const createdBoard = await createBoard(newBoard);
       setBoards([...boards, createdBoard]);
       setNewBoard({ name: '', description: '' });
+      setShowCreate(false); // Cierra la ventana automáticamente
       showToast('Board created successfully', 'success');
     } catch (error) {
       const msg = error.response?.data?.message || error.message || 'Error creating board';
@@ -140,22 +142,37 @@ const BoardList = () => {
           </li>
         ))}
       </ul>
-      <div>
-        <h3>Create new board</h3>
-        <input
-          type="text"
-          placeholder="Name"
-          value={newBoard.name}
-          onChange={e => setNewBoard({ ...newBoard, name: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={newBoard.description}
-          onChange={e => setNewBoard({ ...newBoard, description: e.target.value })}
-        />
-        <button onClick={handleCreate}>Create</button>
-      </div>
+      {/* Botón flotante para crear board */}
+      <button
+        className="fab-create-board"
+        onClick={() => setShowCreate((prev) => !prev)}
+        aria-label="Create Board"
+      >
+        <span style={{ fontSize: 32, lineHeight: 1 }}>+</span>
+      </button>
+      {showCreate && (
+        <div className="create-board-modal">
+          <div className="create-board-form">
+            <h3>Create new board</h3>
+            <input
+              type="text"
+              placeholder="Name"
+              value={newBoard.name}
+              onChange={e => setNewBoard({ ...newBoard, name: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Description"
+              value={newBoard.description}
+              onChange={e => setNewBoard({ ...newBoard, description: e.target.value })}
+            />
+            <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+              <button onClick={handleCreate}>Create</button>
+              <button onClick={() => setShowCreate(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

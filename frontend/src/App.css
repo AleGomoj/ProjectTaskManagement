@@ -614,3 +614,115 @@ body.dark-mode .toast-info {
   background: #7c83fd;
   color: #fff;
 }
+
+.fab-create-board {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #7c83fd;
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 16px #7c83fd44;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  transition: background 0.2s, box-shadow 0.2s;
+  animation: fab-breath 3.2s ease-in-out infinite;
+}
+.fab-create-board:hover {
+  background: #a5dee5;
+  color: #2d2d2d;
+  box-shadow: 0 6px 24px #7c83fd66;
+}
+
+@keyframes fab-breath {
+  0% { box-shadow: 0 0 0 0 #7c83fd33; transform: scale(1); }
+  50% { box-shadow: 0 0 0 8px #7c83fd11; transform: scale(1.025); }
+  100% { box-shadow: 0 0 0 0 #7c83fd33; transform: scale(1); }
+}
+
+.create-board-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44, 44, 80, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1002;
+}
+.create-board-form {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px #7c83fd33;
+  padding: 32px 24px 24px 24px;
+  min-width: 320px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.create-board-form h3 {
+  color: #7c83fd;
+  margin-bottom: 8px;
+}
+.create-board-form input[type="text"] {
+  width: 100%;
+  border: 1px solid #e0e3e8;
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  background: #fafbfc;
+}
+.create-board-form button {
+  background: #7c83fd;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 0;
+  transition: background 0.2s;
+}
+.create-board-form button:hover {
+  background: #a5dee5;
+  color: #2d2d2d;
+}
+@media (max-width: 600px) {
+  .fab-create-board {
+    bottom: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+  }
+  .create-board-form {
+    min-width: 90vw;
+    padding: 18px 4vw 18px 4vw;
+  }
+}
+body.dark-mode .create-board-form {
+  background: #23272f;
+  color: #e0e0e0;
+}
+body.dark-mode .create-board-form input[type="text"] {
+  background: #23272f;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+body.dark-mode .create-board-form button {
+  background: #b8b5ff;
+  color: #23272f;
+}
+body.dark-mode .create-board-form button:hover {
+  background: #7c83fd;
+  color: #fff;
+}
