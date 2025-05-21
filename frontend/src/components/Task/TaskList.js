@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
+import api, { createTaskInBoard, updateTaskInBoard, deleteTaskInBoard } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 
 const TaskList = ({ boardId, refreshKey }) => {
@@ -56,8 +56,9 @@ const TaskList = ({ boardId, refreshKey }) => {
                 onClick={async () => {
                   if (task.status !== 'completed') {
                     try {
-                      await api.updateTaskInBoard(boardId, task.id, { ...task, status: 'completed' });
+                      await updateTaskInBoard(boardId, task.id, { ...task, status: 'completed' });
                       setLocalRefresh(Date.now());
+                      showToast('Task completed', 'success');
                     } catch (err) {
                       showToast('Error completing task', 'error');
                     }
@@ -79,7 +80,7 @@ const TaskList = ({ boardId, refreshKey }) => {
                 onClick={async () => {
                   if (window.confirm('Are you sure you want to delete this task?')) {
                     try {
-                      await api.deleteTaskInBoard(boardId, task.id);
+                      await deleteTaskInBoard(boardId, task.id);
                       setLocalRefresh(Date.now());
                       showToast('Task deleted', 'success');
                     } catch (err) {
