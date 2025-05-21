@@ -107,6 +107,10 @@ body.dark-mode .header {
   background: #23272f;
   color: #b8b5ff;
 }
+body.dark-mode .header h1 {
+  color: #fff !important;
+  text-shadow: 0 2px 8px #232946;
+}
 body.dark-mode .logout-btn {
   background: #444;
   color: #fff;
