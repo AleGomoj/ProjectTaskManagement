@@ -44,7 +44,8 @@ const TaskForm = ({ task, boardId, setTask }) => {
         placeholder="Task Title"
         required
       />
-      <textarea
+      <input
+        type="text"
         name="description"
         value={formData.description}
         onChange={handleChange}
@@ -68,7 +69,7 @@ const TaskForm = ({ task, boardId, setTask }) => {
         onChange={handleChange}
         placeholder="Due Date"
       />
-      <button type="submit">Save Task</button>
+      <button type="submit" style={{ marginTop: '6px' }}>Save Task</button>
     </form>
   );
 };

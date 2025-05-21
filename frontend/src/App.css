@@ -324,7 +324,25 @@ body.dark-mode .auth-error {
 .board-list input[type="text"] {
   border: 1px solid #e0e3e8;
   border-radius: 5px;
-  padding: 6px 10px;
+  padding: 3px 5px;
+  font-size: 1rem;
+  margin-right: 6px;
+  background: #fafbfc;
+}
+
+.board-list select {
+  border: 1px solid #e0e3e8;
+  border-radius: 5px;
+  padding: 3px 5px;
+  font-size: 1rem;
+  margin-right: 6px;
+  background: #fafbfc;
+}
+
+.board-list input[type="date"] {
+  border: 1px solid #e0e3e8;
+  border-radius: 5px;
+  padding: 3px 5px;
   font-size: 1rem;
   margin-right: 6px;
   background: #fafbfc;
