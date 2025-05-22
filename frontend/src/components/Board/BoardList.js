@@ -82,7 +82,7 @@ const BoardList = () => {
 
   return (
     <div className="board-list">
-      <h2>Boards</h2>
+      <h2 style={{ fontSize: '2.1rem', fontWeight: 900, color: '#7c83fd', letterSpacing: '1.5px', marginBottom: 28 }}>Boards</h2>
       <ul>
         {boards.map((board) => (
           <li key={board.id} style={{ flexDirection: 'column', alignItems: 'flex-start', display: 'flex' }}>
@@ -104,7 +104,7 @@ const BoardList = () => {
                 </>
               ) : (
                 <>
-                  <strong>{board.name}</strong>
+                  <strong style={{ fontSize: '1.35rem', color: '#232946', fontWeight: 800, letterSpacing: '0.5px' }}>{board.name}</strong>
                   {board.description && <span style={{ marginLeft: 8 }}>{board.description}</span>}
                 </>
               )}
@@ -118,7 +118,31 @@ const BoardList = () => {
               ) : (
                 <>
                   <button onClick={() => handleEdit(board)}>Edit</button>
-                  <button onClick={() => handleDelete(board.id)}>Delete</button>
+                  <button
+                    onClick={() => handleDelete(board.id)}
+                    style={{
+                      background: 'linear-gradient(90deg, #f67280 0%, #f7b2b7 100%)',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 8,
+                      padding: '7px 16px',
+                      fontWeight: 700,
+                      fontSize: '1rem',
+                      boxShadow: '0 2px 8px #f6728033',
+                      transition: 'background 0.2s, color 0.2s',
+                      cursor: 'pointer',
+                    }}
+                    onMouseOver={e => {
+                      e.currentTarget.style.background = 'linear-gradient(90deg, #f7b2b7 0%, #f67280 100%)';
+                      e.currentTarget.style.color = '#232946';
+                    }}
+                    onMouseOut={e => {
+                      e.currentTarget.style.background = 'linear-gradient(90deg, #f67280 0%, #f7b2b7 100%)';
+                      e.currentTarget.style.color = '#fff';
+                    }}
+                  >
+                    Delete
+                  </button>
                   <button onClick={() => setShowTaskFormFor(showTaskFormFor === board.id ? null : board.id)}>
                     {showTaskFormFor === board.id ? 'Cancel Task' : 'Add Task'}
                   </button>
@@ -142,7 +166,6 @@ const BoardList = () => {
           </li>
         ))}
       </ul>
-      {/* Botón flotante para crear board */}
       <button
         className="fab-create-board"
         onClick={() => setShowCreate((prev) => !prev)}
