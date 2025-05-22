@@ -27,7 +27,8 @@ exports.getBoards = async (req, res) => {
         where: { id: userId },
         attributes: [],
         through: { attributes: [] }
-      }]
+      }],
+      order: [['order', 'ASC'], ['id', 'ASC']]
     });
     res.json(boards);
   } catch (err) {
@@ -75,6 +76,26 @@ exports.deleteBoard = async (req, res) => {
     }
     await board.destroy();
     res.status(204).end();
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.updateBoardsOrder = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { orderedIds } = req.body;
+    if (!Array.isArray(orderedIds)) {
+      return res.status(400).json({ message: 'orderedIds must be an array' });
+    }
+    const boards = await Board.findAll({
+      where: { id: orderedIds, userId },
+    });
+    if (boards.length !== orderedIds.length) {
+      return res.status(400).json({ message: 'Invalid board ids' });
+    }
+    await Promise.all(orderedIds.map((id, idx) => Board.update({ order: idx }, { where: { id, userId } })));
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
