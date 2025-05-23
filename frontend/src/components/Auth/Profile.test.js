@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import Profile from './Profile';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -50,13 +50,15 @@ test('can activate and cancel edit mode', async () => {
     </AuthContext.Provider>
   );
   const changeBtn = screen.getByRole('button', { name: /change password/i });
-  fireEvent.click(changeBtn);
-  // Wait for Save button to appear
+  await act(async () => {
+    fireEvent.click(changeBtn);
+  });
   const saveBtn = await screen.findByRole('button', { name: /save/i });
   expect(saveBtn).toBeInTheDocument();
-  // Cancel edit mode
   const cancelBtn = screen.getByRole('button', { name: /cancel/i });
-  fireEvent.click(cancelBtn);
+  await act(async () => {
+    fireEvent.click(cancelBtn);
+  });
   expect(screen.getByRole('button', { name: /change password/i })).toBeInTheDocument();
 });
 
@@ -67,12 +69,15 @@ test('shows error if passwords do not match', async () => {
     </AuthContext.Provider>
   );
   const changeBtn = screen.getByRole('button', { name: /change password/i });
-  fireEvent.click(changeBtn);
-  // Wait for Save button to appear
+  await act(async () => {
+    fireEvent.click(changeBtn);
+  });
   const saveBtn = await screen.findByRole('button', { name: /save/i });
-  fireEvent.change(screen.getByLabelText(/new password/i), { target: { value: '1234' } });
-  fireEvent.change(screen.getByLabelText(/confirm password/i), { target: { value: '4321' } });
-  fireEvent.click(saveBtn);
+  await act(async () => {
+    fireEvent.change(screen.getByLabelText(/new password/i), { target: { value: '1234' } });
+    fireEvent.change(screen.getByLabelText(/confirm password/i), { target: { value: '4321' } });
+    fireEvent.click(saveBtn);
+  });
   expect(screen.getByText(/passwords do not match/i)).toBeInTheDocument();
 });
 
@@ -82,11 +87,14 @@ test('shows error if password is empty', async () => {
       <Profile />
     </AuthContext.Provider>
   );
-  // Activate edit mode
   const changeBtn = screen.getByRole('button', { name: /change password/i });
-  fireEvent.click(changeBtn);
+  await act(async () => {
+    fireEvent.click(changeBtn);
+  });
   const saveBtn = await screen.findByRole('button', { name: /save/i });
-  fireEvent.click(saveBtn);
+  await act(async () => {
+    fireEvent.click(saveBtn);
+  });
   expect(screen.getByText(/password is required/i)).toBeInTheDocument();
 });
 
@@ -100,16 +108,17 @@ test('shows success message after saving', async () => {
       <Profile />
     </AuthContext.Provider>
   );
-  // Activate edit mode
   const changeBtn = screen.getByRole('button', { name: /change password/i });
-  changeBtn.click();
-  // Fill inputs using fireEvent
+  await act(async () => {
+    fireEvent.click(changeBtn);
+  });
   const passInput = screen.getByLabelText(/new password/i);
   const confirmInput = screen.getByLabelText(/confirm password/i);
-  fireEvent.change(passInput, { target: { value: '1234' } });
-  fireEvent.change(confirmInput, { target: { value: '1234' } });
-  // Click save
-  screen.getByRole('button', { name: /save/i }).click();
+  await act(async () => {
+    fireEvent.change(passInput, { target: { value: '1234' } });
+    fireEvent.change(confirmInput, { target: { value: '1234' } });
+    screen.getByRole('button', { name: /save/i }).click();
+  });
   await screen.findByText(/password updated successfully/i);
 });
 
