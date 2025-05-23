@@ -8,7 +8,9 @@ exports.createTask = async (req, res) => {
     if (!title) {
       return res.status(400).json({ message: 'Task title is required' });
     }
-    const task = await Task.create({ title, description, status, priority, due_date, boardId });
+    const maxOrderTask = await Task.findOne({ where: { boardId }, order: [['order', 'DESC']] });
+    const nextOrder = maxOrderTask ? maxOrderTask.order + 1 : 0;
+    const task = await Task.create({ title, description, status, priority, due_date, boardId, order: nextOrder });
     res.status(201).json(task);
   } catch (err) {
     console.error('Error in createTask:', err);

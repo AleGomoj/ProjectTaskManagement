@@ -355,10 +355,11 @@ body.dark-mode .task-list {
 }
 
 .board-list h2, .task-list h2 {
-  font-size: 1.3rem;
-  margin-bottom: 18px;
-  color: #4f5d75;
-  font-weight: 700;
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #7c83fd;
+  letter-spacing: 1.5px;
+  margin-bottom: 28px;
 }
 
 .board-list ul {
@@ -407,9 +408,10 @@ body.dark-mode .board-list li {
 */
 
 .board-list strong {
-  font-size: 1.08rem;
+  font-size: 1.35rem;
   color: #232946;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }
 .board-list span {
   color: #7c83fd;
