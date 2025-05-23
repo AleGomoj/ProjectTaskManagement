@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.69% </span>
+                <span class="strong">23.07% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/78</span>
+                <span class='fraction'>18/78</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">11.11% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>2/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8% </span>
+                <span class="strong">24% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/75</span>
+                <span class='fraction'>18/75</span>
             </div>
         
             
@@ -180,12 +180,12 @@
 <a name='L115'></a><a href='#L115'>115</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -272,12 +272,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -293,13 +293,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { Task, Board, sequelize } = require('../models');
 &nbsp;
-exports.createTask = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  console.log(`[POST] /api/boards/${req.params.boardId}/tasks - Body:`, req.body, 'User:', req.user);</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const { boardId } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-    const { title, description, status, priority, due_date } = <span class="cstat-no" title="statement not covered" >req.body;</span>
-<span class="cstat-no" title="statement not covered" >    if (!title) {</span>
-<span class="cstat-no" title="statement not covered" >      return res.status(400).json({ message: 'Task title is required' });</span>
+exports.createTask = async (req, res) =&gt; {
+  console.log(`[POST] /api/boards/${req.params.boardId}/tasks - Body:`, req.body, 'User:', req.user);
+  try {
+    const { boardId } = req.params;
+    const { title, description, status, priority, due_date } = req.body;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!title) {
+      return res.status(400).json({ message: 'Task title is required' });
     }
     const maxOrderTask = <span class="cstat-no" title="statement not covered" >await Task.findOne({ where: { boardId }, order: [['order', 'DESC']] });</span>
     const nextOrder = <span class="cstat-no" title="statement not covered" >maxOrderTask ? maxOrderTask.order + 1 : 0;</span>
@@ -385,13 +385,13 @@ exports.deleteTask = <span class="fstat-no" title="function not covered" >as</sp
 };
 &nbsp;
 &nbsp;
-exports.updateTasksOrder = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  console.log(`[PUT] /api/boards/${req.params.boardId}/tasks/order - Body:`, req.body, 'User:', req.user);</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const { boardId } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-    const { orderedIds } = <span class="cstat-no" title="statement not covered" >req.body; </span>
-<span class="cstat-no" title="statement not covered" >    if (!Array.isArray(orderedIds)) {</span>
-<span class="cstat-no" title="statement not covered" >      return res.status(400).json({ message: 'orderedIds must be an array' });</span>
+exports.updateTasksOrder = async (req, res) =&gt; {
+  console.log(`[PUT] /api/boards/${req.params.boardId}/tasks/order - Body:`, req.body, 'User:', req.user);
+  try {
+    const { boardId } = req.params;
+    const { orderedIds } = req.body; 
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!Array.isArray(orderedIds)) {
+      return res.status(400).json({ message: 'orderedIds must be an array' });
     }
 &nbsp;
     const tasks = <span class="cstat-no" title="statement not covered" >await Task.findAll({ where: { boardId } });</span>
@@ -412,7 +412,7 @@ exports.updateTasksOrder = <span class="fstat-no" title="function not covered" >
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-23T19:07:10.091Z
+                at 2025-05-23T19:12:40.553Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
