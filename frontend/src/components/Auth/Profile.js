@@ -50,8 +50,9 @@ const Profile = () => {
           )}
           <form onSubmit={handleSubmit} className="profile-form">
             <div>
-              <label>New Password:</label>
+              <label htmlFor="password">New Password:</label>
               <input
+                id="password"
                 type="password"
                 name="password"
                 value={form.password}
@@ -62,8 +63,9 @@ const Profile = () => {
               />
             </div>
             <div>
-              <label>Confirm Password:</label>
+              <label htmlFor="confirmPassword">Confirm Password:</label>
               <input
+                id="confirmPassword"
                 type="password"
                 name="confirmPassword"
                 value={form.confirmPassword}
