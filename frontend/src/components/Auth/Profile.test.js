@@ -122,6 +122,30 @@ test('shows success message after saving', async () => {
   await screen.findByText(/password updated successfully/i);
 });
 
+test('shows error message if updateUserProfile fails', async () => {
+  jest.spyOn(require('../../services/api'), 'updateUserProfile').mockRejectedValueOnce({
+    response: { data: { message: 'Custom error' } }
+  });
+
+  render(
+    <AuthContext.Provider value={{ user: { id: 1, provider: 'local' } }}>
+      <Profile />
+    </AuthContext.Provider>
+  );
+  const changeBtn = screen.getByRole('button', { name: /change password/i });
+  await act(async () => {
+    fireEvent.click(changeBtn);
+  });
+  const passInput = screen.getByLabelText(/new password/i);
+  const confirmInput = screen.getByLabelText(/confirm password/i);
+  await act(async () => {
+    fireEvent.change(passInput, { target: { value: '1234' } });
+    fireEvent.change(confirmInput, { target: { value: '1234' } });
+    screen.getByRole('button', { name: /save/i }).click();
+  });
+  await screen.findByText(/custom error/i);
+});
+
 test('renders correctly if no user', () => {
   render(
     <AuthContext.Provider value={{ user: null }}>
