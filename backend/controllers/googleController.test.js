@@ -5,7 +5,7 @@ const googleController = require('./googleController');
 describe('Google Controller', () => {
   it('GET /api/google should return 200', async () => {
     const res = await request(app).get('/api/google');
-    expect([200,404]).toContain(res.statusCode); // Ajustar según implementación
+    expect([200,404]).toContain(res.statusCode);
   });
 });
 

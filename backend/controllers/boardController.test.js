@@ -44,7 +44,6 @@ describe('boardController', () => {
     it('should handle errors and return 500', async () => {
       const req = { body: { name: 'Test' }, user: { id: 1 } };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
-      // Forzar error en Board.create
       const { Board, sequelize } = require('../models');
       Board.create.mockRejectedValue(new Error('DB error'));
       await boardController.createBoard(req, res);

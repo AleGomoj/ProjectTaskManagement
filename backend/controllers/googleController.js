@@ -20,7 +20,7 @@ exports.googleLogin = async (req, res) => {
 
     let user = await User.findOne({ where: { email } });
     if (!user) {
-      user = await User.create({ name: name || email, email, password: sub }); // sub como password dummy
+      user = await User.create({ name: name || email, email, password: sub });
     }
     const token = jwt.sign({ id: user.id, role: user.role, name: user.name }, process.env.JWT_SECRET, { expiresIn: '1d' });
     res.json({ token, user });

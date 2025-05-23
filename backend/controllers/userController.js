@@ -58,7 +58,6 @@ exports.update = async (req, res) => {
   const user = await User.findByPk(req.params.id);
   if (!user) return res.status(404).json({ message: 'User not found' });
 
-  // Only allow password update
   if (req.body.password) {
     if (req.body.password.length < 6) {
       return res.status(400).json({ message: 'Password must be at least 6 characters long' });
