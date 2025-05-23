@@ -18,13 +18,18 @@ app.use('/api/google', googleRoutes);
 app.get('/', (_req, res) => res.send('Task Management API Running!'));
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('DB connected');
-    await sequelize.sync();
-    console.log(`Server running on port ${PORT}`);
-  } catch (err) {
-    console.error('Unable to connect to the database:', err);
-  }
-});
+
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, async () => {
+    try {
+      await sequelize.authenticate();
+      console.log('DB connected');
+      await sequelize.sync();
+      console.log(`Server running on port ${PORT}`);
+    } catch (err) {
+      console.error('Unable to connect to the database:', err);
+    }
+  });
+}
+
+module.exports = app;
