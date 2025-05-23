@@ -89,11 +89,9 @@ test('calls login with correct values', async () => {
   renderWithAuthProvider(<AuthForm />, { login });
   fireEvent.change(screen.getByPlaceholderText(/email/i), { target: { value: 'test@example.com' } });
   fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: 'password123' } });
-  // Ambos campos llenos, el botón debe estar habilitado
   const loginBtn = screen.getByRole('button', { name: /log in/i });
   expect(loginBtn).not.toBeDisabled();
   fireEvent.click(loginBtn);
-  // Espera a que login sea llamado
   await screen.findByRole('button', { name: /log in/i });
   expect(login).toHaveBeenCalled();
 });
