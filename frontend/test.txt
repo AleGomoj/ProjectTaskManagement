@@ -1,0 +1,1 @@
+npx react-scripts test --coverage --watchAll=false
