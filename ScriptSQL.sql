@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS tasks (
   status ENUM('pending', 'in_progress', 'completed', 'canceled') DEFAULT 'pending',
   priority ENUM('low', 'medium', 'high') DEFAULT 'medium',
   due_date DATE,
-  order INT NOT NULL DEFAULT 0,
+  `order` INT NOT NULL DEFAULT 0,
   boardId INT NOT NULL,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
