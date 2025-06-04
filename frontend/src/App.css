@@ -1,7 +1,7 @@
 /* Paleta pastel, landing page y sidebar atractiva */
 body {
   margin: 0;
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
   background: linear-gradient(135deg, #f4f6fb 0%, #e9ecf5 100%) !important;
   color: #232946;
 }
@@ -62,7 +62,8 @@ body.dark-mode .auth-form {
   color: #e0e0e0;
   box-shadow: 0 2px 8px #0008;
 }
-body.dark-mode .board-list, body.dark-mode .task-list {
+body.dark-mode .board-list,
+body.dark-mode .task-list {
   background: #181a1b !important;
   color: #e0e0e0;
   border: 1.5px solid #232946;
@@ -71,13 +72,15 @@ body.dark-mode .board-list, body.dark-mode .task-list {
 body.dark-mode .task-list {
   border: none !important;
 }
-body.dark-mode .board-list li, body.dark-mode .task-list li {
+body.dark-mode .board-list li,
+body.dark-mode .task-list li {
   background: #23272f !important;
   border: 1px solid #444;
   color: #e0e0e0;
   box-shadow: 0 2px 12px #0008;
 }
-body.dark-mode .board-list li:hover, body.dark-mode .task-list li:hover {
+body.dark-mode .board-list li:hover,
+body.dark-mode .task-list li:hover {
   background: #232946 !important;
   border-color: #7c83fd;
 }
@@ -144,7 +147,8 @@ body.dark-mode .auth-error {
   color: #fff;
 }
 
-body.dark-mode .board-list h2, body.dark-mode .task-list h2 {
+body.dark-mode .board-list h2,
+body.dark-mode .task-list h2 {
   color: #b8b5ff !important;
   text-shadow: 0 2px 8px #232946;
 }
@@ -229,7 +233,8 @@ body.dark-mode .task-list {
   border-bottom-right-radius: 32px;
   transition: width 0.3s;
 }
-.sidebar:hover, .sidebar:focus-within {
+.sidebar:hover,
+.sidebar:focus-within {
   width: 200px;
 }
 
@@ -265,7 +270,8 @@ body.dark-mode .task-list {
   transition: background 0.2s, color 0.2s;
   opacity: 0.85;
 }
-.sidebar ul li a:hover, .sidebar ul li a.active {
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
   background: #fff;
   color: #7c83fd;
   opacity: 1;
@@ -280,6 +286,70 @@ body.dark-mode .task-list {
 .sidebar:not(:hover):not(:focus-within) ul li a span:last-child {
   opacity: 0;
   width: 0;
+}
+
+/* Bottom navigation for mobile */
+.bottom-nav {
+  display: none;
+}
+@media (max-width: 700px) {
+  .sidebar {
+    display: none !important;
+  }
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 60px;
+    background: linear-gradient(135deg, #a5dee5 0%, #b8b5ff 100%);
+    box-shadow: 0 -2px 12px #b8b5ff33;
+    z-index: 200;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 8px;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    gap: 0;
+  }
+  .bottom-nav a,
+  .bottom-nav button {
+    background: none;
+    border: none;
+    color: #7c83fd;
+    font-size: 1.6rem;
+    padding: 0 8px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+    height: 100%;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .bottom-nav a.active {
+    color: #232946;
+    background: #fff;
+  }
+  .bottom-nav button:active,
+  .bottom-nav a:active {
+    background: #e0e7ff;
+  }
+  .bottom-nav .darkmode-toggle-btn {
+    margin-top: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    background: none !important;
+    color: #7c83fd !important;
+    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+  }
 }
 
 .main-content {
@@ -346,7 +416,8 @@ body.dark-mode .task-list {
   color: #fff;
 }
 
-.board-list, .task-list {
+.board-list,
+.task-list {
   background: none !important;
   box-shadow: none !important;
   border: none !important;
@@ -354,7 +425,8 @@ body.dark-mode .task-list {
   margin-bottom: 0;
 }
 
-.board-list h2, .task-list h2 {
+.board-list h2,
+.task-list h2 {
   font-size: 2.1rem;
   font-weight: 900;
   color: #7c83fd;
@@ -584,6 +656,26 @@ body.dark-mode .board-list li {
     border-radius: 8px;
     padding: 10px 12px;
   }
+  .fab-create-board {
+    bottom: 76px !important;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .fab-create-board {
+    bottom: 76px !important;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+  }
+  .create-board-form {
+    min-width: 90vw;
+    padding: 18px 4vw 18px 4vw;
+  }
 }
 @media (max-width: 500px) {
   .main-content {
@@ -592,7 +684,8 @@ body.dark-mode .board-list li {
   .header {
     padding: 10px 8px;
   }
-  .board-list, .task-list {
+  .board-list,
+  .task-list {
     padding: 10px 4px;
   }
   .board-list input[type="text"] {
@@ -608,7 +701,7 @@ body.dark-mode .board-list li {
   padding: 2rem;
   max-width: 400px;
   margin: 2rem auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 }
 .profile-form label {
   display: block;
@@ -706,8 +799,14 @@ body.dark-mode .board-list li {
   color: #2d2d2d;
 }
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 body.dark-mode .toast {
@@ -755,14 +854,26 @@ body.dark-mode .toast-info {
 }
 
 @keyframes fab-breath {
-  0% { box-shadow: 0 0 0 0 #7c83fd33; transform: scale(1); }
-  50% { box-shadow: 0 0 0 8px #7c83fd11; transform: scale(1.025); }
-  100% { box-shadow: 0 0 0 0 #7c83fd33; transform: scale(1); }
+  0% {
+    box-shadow: 0 0 0 0 #7c83fd33;
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px #7c83fd11;
+    transform: scale(1.025);
+  }
+  100% {
+    box-shadow: 0 0 0 0 #7c83fd33;
+    transform: scale(1);
+  }
 }
 
 .create-board-modal {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(44, 44, 80, 0.18);
   display: flex;
   align-items: center;
@@ -822,7 +933,7 @@ body.dark-mode .toast-info {
 }
 @media (max-width: 600px) {
   .fab-create-board {
-    bottom: 16px;
+    bottom: 76px !important;
     right: 16px;
     width: 48px;
     height: 48px;
