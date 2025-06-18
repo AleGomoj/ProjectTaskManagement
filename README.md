@@ -70,15 +70,16 @@ This will open two terminals:
 
 ### 🖥️ Desktop Screens
 
-| Dashboard | Tasks | Task Detail |
-|----------|-------|-------------|
-| *(Coming soon)* | *(Coming soon)* | *(Coming soon)* |
+![pc-1](https://github.com/user-attachments/assets/d99c71bc-ef59-4e58-8c91-b2d236ae6937)
+
+![pc-2](https://github.com/user-attachments/assets/8d114ba0-14bd-430b-a849-416b465e8ab6)
+
 
 ### 📱 Mobile Screens
 
-| Dashboard | Tasks | Task Detail |
-|----------|-------|-------------|
-| *(Coming soon)* | *(Coming soon)* | *(Coming soon)* |
+![mobile-1](https://github.com/user-attachments/assets/dca704d9-656f-46e9-8307-9d3793bc1fcc)
+
+![mobile-2](https://github.com/user-attachments/assets/6453e88e-0900-4f2d-8b99-351b7322fab8)
 
 ---
 
